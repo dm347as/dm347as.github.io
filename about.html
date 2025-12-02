@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — Diogo Santos</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="icon" href="assets/images/circle.svg?v=2" type="image/svg+xml" />
+  </head>
+  <body>
+    <a id="top" class="sr-only" href="#top">Top</a>
+
+    <!-- Header with corner buttons -->
+    <header class="site-header" role="banner" aria-label="Top navigation">
+      <a
+        class="corner-btn top-left"
+        href="index.html"
+        aria-label="Back to portfolio"
+        >←</a
+      >
+      <a class="corner-btn top-right" href="assets/cv.pdf" download
+        >Curriculum Vitae ↓̲</a
+      >
+    </header>
+
+    <!-- Example main content (placeholder) -->
+    <main class="site-main top-aligned">
+      <!-- Projects list (15) - will be visually positioned behind header/footer -->
+      <section id="projects" class="projects">
+        <!-- preview element removed (hover preview functionality disabled) -->
+        <!-- projects heading intentionally removed per request -->
+        <ul class="projects-grid">
+          <li>
+            <a
+              >hi, i'm
+              <span
+                class="hover-image"
+                data-image="assets/images/about/diogo.jpg"
+                >Diogo</span
+              >.</a
+            >
+            <a>born and raised</a>
+            <a>between Perafita</a>
+            <a>Lamego</a>
+            <a></a>
+            <a>A retired football</a>
+            <a>superstar...</a>
+            <a></a>
+            <a>now a decent</a>
+            <a>multidisciplinary</a>
+            <a>designer</a>
+            <a></a>
+            <a>at the moment</a>
+            <a>working very hard for</a>
+            <a>atelier d'alves</a>
+            <a></a>
+            <a>so that one day</a>
+            <a>i can be a milion....</a>
+            <a>better designer!!</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Image preview element positioned bottom-left -->
+    <div class="project-image-preview" aria-hidden="true">
+      <img src="" alt="" />
+    </div>
+
+    <!-- Footer with corner buttons -->
+    <footer
+      class="site-footer"
+      role="contentinfo"
+      aria-label="Footer navigation"
+    >
+      <a class="corner-btn bottom-left" href="/contacts.html">contact me</a>
+      <a class="corner-btn bottom-right" href="#top">up</a>
+    </footer>
+
+    <style>
+      /* Override global grey text to black for about page */
+      .projects-grid li a {
+        color: #111827 !important;
+      }
+
+      /* Remove zoom effect on about page links */
+      .projects-grid li a:hover,
+      .projects-grid li a:focus {
+        transform: none;
+        color: #111827 !important;
+      }
+
+      /* Enable zoom and color change on specific words with image preview */
+      .hover-image {
+        display: inline-block;
+        transition: transform 160ms ease, color 160ms ease;
+        cursor: pointer;
+        color: #d4d6d8;
+      }
+      .hover-image:hover {
+        transform: scale(1.06);
+        color: #111827;
+      }
+    </style>
+
+    <script>
+      // Show image preview on hover for specific words
+      (function () {
+        const imagePreview = document.querySelector(".project-image-preview");
+        const hoverElements = document.querySelectorAll(".hover-image");
+
+        hoverElements.forEach((el) => {
+          const image = el.dataset.image;
+          if (!image) return;
+
+          el.addEventListener("pointerenter", () => {
+            const img = imagePreview.querySelector("img");
+            if (img) {
+              img.src = image;
+              // Remove shadow for PNG images
+              if (image.toLowerCase().endsWith(".png")) {
+                img.classList.add("no-shadow");
+              } else {
+                img.classList.remove("no-shadow");
+              }
+              imagePreview.classList.add("visible");
+            }
+          });
+
+          el.addEventListener("pointerleave", () => {
+            imagePreview.classList.remove("visible");
+            setTimeout(() => {
+              if (!imagePreview.classList.contains("visible")) {
+                const img = imagePreview.querySelector("img");
+                if (img) img.src = "";
+              }
+            }, 300);
+          });
+        });
+      })();
+
+      // Smooth scroll to top for "up" button
+      (function () {
+        const upBtn = document.querySelector(
+          '.corner-btn.bottom-right[href="#top"]'
+        );
+        if (upBtn) {
+          upBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+      })();
+
+      // Custom cursor following mouse
+      (function () {
+        const cursor = document.createElement("div");
+        cursor.style.cssText =
+          "position: fixed; width: 12px; height: 12px; background: #111827; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);";
+        document.body.appendChild(cursor);
+
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.left = e.clientX + "px";
+          cursor.style.top = e.clientY + "px";
+        });
+      })();
+    </script>
+  </body>
+</html>

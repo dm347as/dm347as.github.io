@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home — Diogo Santos</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="icon" href="assets/images/circle.svg?v=2" type="image/svg+xml" />
+  </head>
+  <body>
+    <a id="top" class="sr-only" href="#top">Top</a>
+
+    <!-- Header with corner buttons -->
+    <header class="site-header" role="banner" aria-label="Top navigation">
+      <a class="corner-btn top-left" href="#">Diogo Santos</a>
+      <a class="corner-btn top-right" href="about.html">about</a>
+    </header>
+
+    <!-- Example main content (placeholder) -->
+    <main class="site-main">
+      <!-- Projects list (15) - will be visually positioned behind header/footer -->
+      <section id="projects" class="projects">
+        <!-- preview element removed (hover preview functionality disabled) -->
+        <!-- projects heading intentionally removed per request -->
+        <ul class="projects-grid">
+          <li
+            data-client="Cliente: Porto Innovation Hub"
+            data-year="Ano: 2025"
+            data-type="Tipo: Editorial"
+            data-image="assets/images/PIH/livro pih.HEIC"
+          >
+            <a href="#">Work In Progress</a>
+          </li>
+          <li
+            data-client="Cliente: Astro Fingido"
+            data-year="Ano: 2025"
+            data-type="Tipo: Cartaz"
+            data-image="assets/images/astrofingido/1.jpg"
+          >
+            <a href="#">A feira</a>
+          </li>
+          <li
+            data-client="Cliente: Astro Fingido"
+            data-year="Ano: 2025"
+            data-type="Tipo: Identidade"
+            data-image="assets/images/astrolabia/A1. Astrolabia_cartaz 50x70.jpg"
+          >
+            <a href="#">Festival Astrolábia</a>
+          </li>
+          <li
+            data-client="Cliente: Caminhos do Cinema Português"
+            data-year="Ano: 2025"
+            data-type="Tipo: Identidade"
+            data-image="assets/images/caminhos/A2.Muppi.jpg"
+          >
+            <a href="#">CCP 31ª edi.</a>
+          </li>
+          <li
+            data-client="Cliente: ESMAD<br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Editorial"
+            data-image="assets/images/cosmos/IMG_0026.HEIC"
+          >
+            <a href="#">O&R do Cosmos</a>
+          </li>
+          <li
+            data-client="Cliente: Voz da Póvoa<br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Editorial"
+            data-image="assets/images/vozpovoa/jornal.png"
+          >
+            <a href="#">Jornal Voz da Póvoa</a>
+          </li>
+          <li
+            data-client="Cliente: Decathlon<br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Identidade"
+            data-image="assets/images/kipsta/tshirt2.png"
+          >
+            <a href="#">Kipsta</a>
+          </li>
+          <li
+            data-client="Cliente: Nike Air Jordan<br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Publicidade"
+            data-image="assets/images/nike/rosa.png"
+          >
+            <a href="#">Ready. Set. "Game".</a>
+          </li>
+          <li
+            data-client="Cliente: ESMAD<br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Identidade"
+            data-image="assets/images/biblioteca/manual_vfinal.jpg"
+          >
+            <a href="#">Biblioteca Arquivo</a>
+          </li>
+          <li
+            data-client="Cliente: Restaurante Paquete"
+            data-year="Ano: 2025"
+            data-type="Tipo: Identidade"
+            data-image="assets/images/paquete/Asset 19.png"
+          >
+            <a href="#">Restaurante Paquete</a>
+          </li>
+          <li
+            data-client="Cliente: ESMAD <br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Editorial"
+            data-image="assets/images/imbroglio/1imb.png"
+          >
+            <a href="#">Jornal Imbróglio</a>
+          </li>
+          <li
+            data-client="Cliente: ESMAD <br>School Project"
+            data-year="Ano: 2025"
+            data-type="Tipo: Identidade"
+            data-image=""
+          >
+            <a href="#">Ponto a Ponto</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Image preview element positioned bottom-left -->
+    <div class="project-image-preview" aria-hidden="true">
+      <img src="" alt="" />
+    </div>
+
+    <!-- Footer with corner buttons -->
+    <footer
+      class="site-footer"
+      role="contentinfo"
+      aria-label="Footer navigation"
+    >
+      <a class="corner-btn bottom-left" href="contacts.html">contact me</a>
+      <a class="corner-btn bottom-right" href="#top">up</a>
+    </footer>
+
+    <script>
+      // Swap header corner text and show image preview on project hover
+      (function () {
+        const leftBtn = document.querySelector(".corner-btn.top-left");
+        const rightBtn = document.querySelector(".corner-btn.top-right");
+        const bottomLeftBtn = document.querySelector(".corner-btn.bottom-left");
+        const imagePreview = document.querySelector(".project-image-preview");
+        const projectItems = document.querySelectorAll(".projects-grid li");
+
+        const defaultLeft = leftBtn.textContent;
+        const defaultRight = rightBtn.textContent;
+        const defaultBottomLeft = bottomLeftBtn.textContent;
+
+        projectItems.forEach((li) => {
+          const client = li.dataset.client;
+          const year = li.dataset.year;
+          const type = li.dataset.type;
+          const image = li.dataset.image;
+
+          if (!client || !year) return;
+
+          li.addEventListener("pointerenter", () => {
+            leftBtn.innerHTML = client;
+            rightBtn.textContent = year;
+            if (type) bottomLeftBtn.textContent = type;
+
+            // Show image preview
+            if (image) {
+              const img = imagePreview.querySelector("img");
+              if (img) {
+                img.src = image;
+                // Remove shadow for PNG images
+                if (image.toLowerCase().endsWith(".png")) {
+                  img.classList.add("no-shadow");
+                } else {
+                  img.classList.remove("no-shadow");
+                }
+                imagePreview.classList.add("visible");
+              }
+            }
+          });
+
+          li.addEventListener("pointerleave", () => {
+            leftBtn.textContent = defaultLeft;
+            rightBtn.textContent = defaultRight;
+            bottomLeftBtn.textContent = defaultBottomLeft;
+
+            // Hide image preview
+            imagePreview.classList.remove("visible");
+            setTimeout(() => {
+              if (!imagePreview.classList.contains("visible")) {
+                const img = imagePreview.querySelector("img");
+                if (img) img.src = "";
+              }
+            }, 300);
+          });
+          const a = li.querySelector("a");
+          if (a) {
+            a.addEventListener("focus", () => {
+              leftBtn.innerHTML = client;
+              rightBtn.textContent = year;
+              if (type) bottomLeftBtn.textContent = type;
+
+              if (image) {
+                const img = imagePreview.querySelector("img");
+                if (img) {
+                  img.src = image;
+                  // Remove shadow for PNG images
+                  if (image.toLowerCase().endsWith(".png")) {
+                    img.classList.add("no-shadow");
+                  } else {
+                    img.classList.remove("no-shadow");
+                  }
+                  imagePreview.classList.add("visible");
+                }
+              }
+            });
+            a.addEventListener("blur", () => {
+              leftBtn.textContent = defaultLeft;
+              rightBtn.textContent = defaultRight;
+              bottomLeftBtn.textContent = defaultBottomLeft;
+
+              imagePreview.classList.remove("visible");
+              setTimeout(() => {
+                if (!imagePreview.classList.contains("visible")) {
+                  const img = imagePreview.querySelector("img");
+                  if (img) img.src = "";
+                }
+              }, 300);
+            });
+          }
+        });
+      })();
+
+      // Smooth scroll to top for "up" button
+      (function () {
+        const upBtn = document.querySelector(
+          '.corner-btn.bottom-right[href="#top"]'
+        );
+        if (upBtn) {
+          upBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+      })();
+
+      // Custom cursor following mouse
+      (function () {
+        const cursor = document.createElement("div");
+        cursor.style.cssText =
+          "position: fixed; width: 12px; height: 12px; background: #111827; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);";
+        document.body.appendChild(cursor);
+
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.left = e.clientX + "px";
+          cursor.style.top = e.clientY + "px";
+        });
+      })();
+    </script>
+  </body>
+</html>

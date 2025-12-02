@@ -1,0 +1,334 @@
+/* Global / reset */
+* {
+  box-sizing: border-box;
+  cursor: none;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial;
+  line-height: 1.4;
+  color: #111827;
+  background: #f8fafc;
+}
+
+/* Custom cursor */
+body::after {
+  content: "";
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #111827;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+
+/* Header / Footer layout */
+.site-header,
+.site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  pointer-events: none; /* let dedicated corner links receive pointer events */
+  z-index: 50; /* ensure header/footer layer above main content */
+}
+
+.site-header {
+  top: 0;
+}
+.site-footer {
+  bottom: 0;
+}
+
+/* Corner buttons (top-left, top-right, bottom-left, bottom-right) */
+.corner-btn {
+  position: fixed;
+  pointer-events: auto; /* enable clicking */
+  display: inline-block;
+  padding: 0; /* make link look like text */
+  background: transparent;
+  color: #111827;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  box-shadow: none;
+  transition: transform 160ms ease, filter 160ms ease, opacity 160ms ease;
+}
+
+.top-left {
+  top: 7px;
+  left: 7px;
+}
+.top-right {
+  top: 7px;
+  right: 7px;
+}
+.bottom-left {
+  bottom: 7px;
+  left: 7px;
+}
+.bottom-right {
+  bottom: 7px;
+  right: 7px;
+}
+
+.corner-btn:hover {
+  /* remove underline on hover */
+  text-decoration: none;
+  opacity: 0.98;
+}
+
+/* Project image preview shown on hover - positioned bottom-left */
+.project-image-preview {
+  position: fixed;
+  bottom: 32px; /* space above the footer "contact me" text */
+  left: 7px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 280ms ease, transform 280ms ease;
+  pointer-events: none;
+  z-index: 45; /* above main content but below header/footer text (z-index 50) */
+}
+
+.project-image-preview img {
+  display: block;
+  max-height: 65vh; /* max height is half(50%) of viewport height */
+  max-width: 40vw; /* prevent overflow on narrow screens */
+  width: auto;
+  height: auto;
+  object-fit: contain; /* show full image without cropping */
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.project-image-preview img.no-shadow {
+  box-shadow: none;
+}
+
+.project-image-preview.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 520px) {
+  .project-image-preview img {
+    max-height: 40vh;
+  }
+  .project-image-preview {
+    bottom: 28px;
+  }
+}
+
+/* Simple main content to keep demo centered */
+.site-main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+}
+
+/* page-specific helper: align content at the top instead of centered
+   used by pages that should start from the top (e.g., contacts.html) */
+.site-main.top-aligned {
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1px; /* leave space for header */
+}
+.hero {
+  max-width: 820px;
+  padding: 48px 24px;
+  text-align: center;
+}
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+.hero p {
+  margin: 0;
+  color: #374151;
+}
+
+/* contacts page layout */
+.contacts-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+  max-width: 840px;
+  margin: 28px auto 0;
+  padding: 0 18px;
+}
+.contact-card {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 14px 18px;
+  box-shadow: 0 2px 12px rgba(16, 24, 40, 0.04);
+}
+.contact-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e6e9ee;
+  border-radius: 6px;
+  margin: 6px 0 12px;
+  font-size: 14px;
+}
+.form-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.form-actions button {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #111827;
+  color: white;
+  font-weight: 700;
+}
+.link-button {
+  text-decoration: none;
+  color: #111827;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e6e9ee;
+}
+
+/* Projects grid — visually sits behind header/footer (header/footer z-index:50) */
+.projects {
+  /* single-column layout requirements -- use 3px top padding and no side padding so text can use full viewport width */
+  padding: 15px 0 120px;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* center projects container */
+}
+/* heading removed intentionally - preserved class in case of future use */
+.projects-title {
+  display: none;
+}
+.projects-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  /* single column across the full width */
+  grid-template-columns: 1fr;
+  gap: 6px; /* small spacing between rows */
+  z-index: 10;
+  width: 100%; /* allow the grid to use the page width */
+  align-items: start;
+  justify-items: stretch; /* cells fill their column */
+}
+
+.project-preview {
+  /* preview feature removed - rule kept only for backward compatibility if needed */
+  display: none;
+}
+.projects-grid li {
+  /* fill the entire grid column so long names don't break layout */
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%; /* occupy full column */
+  display: block; /* block-level so children can be width:100% */
+  position: relative; /* create stacking context for each list item */
+  z-index: 10; /* baseline — preview will sit above these */
+}
+/* preview feature disabled: no visible preview rules remain */
+.projects-grid li {
+  /* fill the entire grid column so long names don't break layout */
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%; /* occupy full column */
+  display: block; /* block-level so children can be width:100% */
+}
+.projects-grid li a {
+  /* mirror corner link styling for project labels */
+  color: #cfd2d6;
+  text-decoration: none; /* no underline by default */
+  /* make project labels much larger and bolder */
+  font-weight: 800;
+  text-transform: uppercase; /* all caps */
+  /* responsive, large typography — 'way bigger' across devices */
+  font-size: clamp(26px, 6.5vw, 140px);
+  line-height: 0.7; /* compact leading */
+  text-align: center;
+  display: block; /* full-width clickable area */
+  width: 100%;
+  /* full-width clickable area; add comfortable horizontal padding so text doesn't touch edges */
+  padding: 10px 28px;
+  box-sizing: border-box;
+  /* allow long names to wrap instead of breaking layout */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform 160ms ease, color 160ms ease, opacity 160ms ease;
+}
+
+/* upload button inside each item */
+/* upload controls removed in this version */
+
+/* Keep items visually compact across small screens */
+@media (max-width: 520px) {
+  .projects-grid {
+    gap: 6px;
+    /* keep a single, full-width column on narrow screens so long names use entire width */
+    grid-template-columns: 1fr;
+  }
+  .projects-grid li a {
+    font-size: clamp(20px, 9vw, 40px);
+  }
+}
+.projects-grid li a,
+.projects-grid li a:focus {
+  will-change: transform, opacity; /* hint for smoother transitions */
+}
+
+/* hovered / focused project element should be above the preview */
+.projects-grid li:hover,
+.projects-grid li:focus-within {
+  z-index: 20; /* above the preview (15) */
+}
+
+.projects-grid li a:hover,
+.projects-grid li a:focus {
+  /* on hover or keyboard focus: zoom slightly and change to dark color */
+  text-decoration: none;
+  transform: scale(1.06);
+  color: #111827;
+  opacity: 0.99;
+}
+
+/* Accessibility helper (visually-hidden) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
